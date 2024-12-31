@@ -149,26 +149,66 @@ class WebSocketDemoState extends State<WebSocketDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('WebSocket Demo'),
-      ),
-      body: Center(
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Text(
-          serverMessage,
-          style: const TextStyle(fontSize: 24),
+        appBar: AppBar(
+          title: const Text('recorder',
+              style: TextStyle(fontSize: 16, color: Colors.black)),
+          toolbarHeight: 40.0,
         ),
-        const SizedBox(height: 20),
-        isRecording
-            ? const Text(
-                "録画中...",
-                style: TextStyle(color: Colors.red, fontSize: 20),
-              )
-            : const Text(
-                "待機中...",
-                style: TextStyle(color: Colors.green, fontSize: 20),
+        body: Column(children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            constraints: const BoxConstraints(minHeight: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 8,
+                  child: Text(
+                    serverMessage,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    isRecording ? "録画中…" : "待機中…",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: isRecording ? Colors.red : Colors.green,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                )
+              ],
+            ),
+          ),
+          if (cameraController.value.isInitialized)
+            Flexible(
+              flex: 3, // 全体の高さの約1/3に設定
+              child: AspectRatio(
+                aspectRatio: cameraController.value.aspectRatio,
+                child: CameraPreview(cameraController),
               ),
-      ])),
-    );
+            ),
+        ])
+
+        // Center(
+        //     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        //   Text(
+        //     serverMessage,
+        //     style: const TextStyle(fontSize: 24),
+        //   ),
+        //   const SizedBox(height: 20),
+        //   isRecording
+        //       ? const Text(
+        //           "録画中...",
+        //           style: TextStyle(color: Colors.red, fontSize: 20),
+        //         )
+        //       : const Text(
+        //           "待機中...",
+        //           style: TextStyle(color: Colors.green, fontSize: 20),
+        //         ),
+        // ])),
+        );
   }
 }
