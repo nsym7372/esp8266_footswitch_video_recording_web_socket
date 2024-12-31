@@ -41,6 +41,10 @@ void initNetwork() {
   IPAddress gateway(192, 168, 179, 1);
   IPAddress subnet(255, 255, 255, 0);
 
+  if (!WiFi.config(local_IP, gateway, subnet)) {
+    Serial.println("Failed to configure static IP");
+  }
+  
   WiFi.begin(CONF_SSID, CONF_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
