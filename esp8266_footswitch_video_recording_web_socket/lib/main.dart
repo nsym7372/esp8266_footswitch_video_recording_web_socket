@@ -190,25 +190,6 @@ class WebSocketDemoState extends State<WebSocketDemo> {
                 child: CameraPreview(cameraController),
               ),
             ),
-        ])
-
-        // Center(
-        //     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        //   Text(
-        //     serverMessage,
-        //     style: const TextStyle(fontSize: 24),
-        //   ),
-        //   const SizedBox(height: 20),
-        //   isRecording
-        //       ? const Text(
-        //           "録画中...",
-        //           style: TextStyle(color: Colors.red, fontSize: 20),
-        //         )
-        //       : const Text(
-        //           "待機中...",
-        //           style: TextStyle(color: Colors.green, fontSize: 20),
-        //         ),
-        // ])),
-        );
+        ]));
   }
 }
