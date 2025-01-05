@@ -184,11 +184,12 @@ class WebSocketDemoState extends State<WebSocketDemo> {
           ),
           if (cameraController.value.isInitialized)
             Flexible(
-              flex: 3, // 全体の高さの約1/3に設定
-              child: AspectRatio(
-                aspectRatio: cameraController.value.aspectRatio,
-                child: CameraPreview(cameraController),
-              ),
+              child: Container(
+                  color: isRecording ? Colors.red.shade100 : null,
+                  child: Center(
+                      child: AspectRatio(
+                          aspectRatio: cameraController.value.aspectRatio,
+                          child: CameraPreview(cameraController)))),
             ),
         ]));
   }
