@@ -149,10 +149,12 @@ class WebSocketDemoState extends State<WebSocketDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: isRecording ? Colors.red.shade100 : null,
         appBar: AppBar(
           title: const Text('recorder',
               style: TextStyle(fontSize: 16, color: Colors.black)),
           toolbarHeight: 40.0,
+          backgroundColor: isRecording ? Colors.red.shade100 : null,
         ),
         body: Column(children: [
           Container(
@@ -184,12 +186,9 @@ class WebSocketDemoState extends State<WebSocketDemo> {
           ),
           if (cameraController.value.isInitialized)
             Flexible(
-              child: Container(
-                  color: isRecording ? Colors.red.shade100 : null,
-                  child: Center(
-                      child: AspectRatio(
-                          aspectRatio: cameraController.value.aspectRatio,
-                          child: CameraPreview(cameraController)))),
+              child: AspectRatio(
+                  aspectRatio: cameraController.value.aspectRatio,
+                  child: CameraPreview(cameraController)),
             ),
         ]));
   }
