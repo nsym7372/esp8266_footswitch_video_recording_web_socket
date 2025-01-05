@@ -6,7 +6,7 @@ const int switchPin = 2;
 static int previousSensorState = HIGH;
 
 unsigned long lastUpdated = 0; // 最後にデバウンス処理を行った時間
-unsigned long debounceDelay = 1000;   // デバウンス間隔 (ミリ秒)
+unsigned long debounceDelay = 3000;   // デバウンス間隔 (ミリ秒)
 
 WebSocketsServer webSocket(81);
 
