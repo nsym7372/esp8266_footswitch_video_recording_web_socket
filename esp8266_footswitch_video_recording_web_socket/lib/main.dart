@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -94,7 +95,7 @@ class WebSocketDemoState extends State<WebSocketDemo> {
         isRecording = cameraController.value.isRecordingVideo;
       });
     } catch (e) {
-      print("動画撮影の開始に失敗しました: $e");
+      log("動画撮影の開始に失敗しました: $e");
     }
   }
 
@@ -123,7 +124,7 @@ class WebSocketDemoState extends State<WebSocketDemo> {
         isRecording = cameraController.value.isRecordingVideo;
       });
     } catch (e) {
-      print("動画撮影の終了に失敗しました: $e");
+      log("動画撮影の終了に失敗しました: $e");
     }
   }
 
@@ -132,9 +133,9 @@ class WebSocketDemoState extends State<WebSocketDemo> {
     try {
       await platform
           .invokeMethod('registerVideoToGallery', {'filePath': filePath});
-      print("ギャラリーへの登録が完了しました: $filePath");
+      log("ギャラリーへの登録が完了しました: $filePath");
     } catch (e) {
-      print("ギャラリー登録エラー: $e");
+      log("ギャラリー登録エラー: $e");
     }
   }
 
