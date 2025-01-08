@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:camera/camera.dart';
 import 'package:video_recording/model/camera_service.dart';
 import 'package:video_recording/model/websocket_service.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class RecorderViewModel {
   final CameraService cameraService;
@@ -19,6 +20,7 @@ class RecorderViewModel {
   CameraController get cameraController => cameraService.cameraController;
 
   RecorderViewModel(this.cameraService, this.webSocketService) {
+    WakelockPlus.enable();
     webSocketService.messages.listen(_handleWebSocketMessage);
   }
 
@@ -31,8 +33,11 @@ class RecorderViewModel {
 
     if (!_isRecording) {
       await cameraService.startRecording();
+      _serverMessageController.add(message);
     } else {
-      await cameraService.stopRecording('/storage/emulated/0/Movies');
+      final path =
+          await cameraService.stopRecording('/storage/emulated/0/Movies');
+      _serverMessageController.add(path ?? "fatal error");
     }
 
     _recordingController.add(!_isRecording);
@@ -40,8 +45,9 @@ class RecorderViewModel {
   }
 
   void dispose() {
-    webSocketService.close();
     _recordingController.close();
     _serverMessageController.close();
+    webSocketService.close();
+    WakelockPlus.disable();
   }
 }

@@ -7,10 +7,9 @@ import 'package:video_recording/viewmodel/recorder_viewmodel.dart';
 
 import 'package:camera/camera.dart';
 
-// late List<CameraDescription> cameras; // グローバルに定義
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   List<CameraDescription> cameras = await availableCameras();
   final cameraController =
       CameraController(cameras.first, ResolutionPreset.low);
