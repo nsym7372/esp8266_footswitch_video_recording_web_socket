@@ -7,6 +7,7 @@ static int previousSensorState = HIGH;
 
 unsigned long lastUpdated = 0; // 最後にデバウンス処理を行った時間
 unsigned long debounceDelay = 3000;   // デバウンス間隔 (ミリ秒)
+bool lastSentState = false; // 複数回の送信が実行されることを防ぐ
 
 WebSocketsServer webSocket(81);
 
@@ -24,14 +25,18 @@ void loop() {
   bool sensorState = digitalRead(switchPin);
   // 状態が変わったときだけ処理
   if(sensorState == LOW && previousSensorState == HIGH){
-      if(millis() - lastUpdated < debounceDelay){
+      if(millis() - lastUpdated < debounceDelay && lastSentState){
         return;
       }
 
       Serial.println("PRESSED");
       webSocket.broadcastTXT("PRESSED");
-
+      lastSentState = true;
       lastUpdated = millis();
+  }
+
+  if( sensorState == HIGH){
+    lastSentState = false;
   }
   previousSensorState = sensorState; // 状態を更新
 }
